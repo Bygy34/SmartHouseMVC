@@ -1,0 +1,41 @@
+﻿@using SmartHouseMVC.Models.clas
+@model IDictionary<int, Technics>
+
+@{
+    Layout = null;
+}
+<div class="figure-div">
+    <h2>AudioPlayer</h2>
+
+    @foreach (var item in Model)
+    {
+        
+            if (item.Value is AudioPlayer)
+            {
+                <div class="figure">
+                    @if (item.Value.status == true)
+                    {
+
+                        <h2>@item.Value.Name</h2><br />
+                        @Html.RouteLink("Выключить", new { controller = "My", action = "Off", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })
+                        <span>Громкость:</span>
+                        @Html.Label(((Volume)item.Value).Volumes.ToString())<br />
+                        @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseVolume", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })
+                        @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasVolume", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })<br />
+                        <span>Канал:</span>
+                        @Html.Label(((AudioPlayer)item.Value).Trec.ToString())<br />
+                        @Html.RouteLink("Следующий", new { controller = "My", action = "TrecNext", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })
+                        @Html.RouteLink("Предыдущий", new { controller = "My", action = "TrecPrevious", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })<br />
+
+                    }
+                    else
+                    {
+                        <h2>@item.Value.Name</h2><br />
+                        @Html.RouteLink("Выключить", new { controller = "My", action = "On", id = item.Key }, new { id = item.Key, @class = "btn btn-default" })
+                    }
+                </div>
+            }
+
+    }
+</div>
+    

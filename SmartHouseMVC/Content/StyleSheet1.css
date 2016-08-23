@@ -1,0 +1,40 @@
+﻿body {
+}
+
+
+.figure-div{
+    width:200px;
+    float:left;
+    margin-left:15px; 
+   border:1px solid aqua;
+}
+.figure {
+    float: left;
+    width: 300px;
+    height: 300px;
+ //   border:1px solid aqua
+}
+
+
+#Left{
+	margin:0 20px 0 20px;
+	width:160px;
+	float:left;
+	background-color: #02eafd;
+    background-image:url(../Content/PFon.jpg);
+    border-radius: 20px;
+    border: 1px solid #5BC0DE;
+    text-align:center;
+}
+#Right{
+    background-image:url(../Content/PFon.jpg);
+	width:160px;
+	float:right;
+    border-radius: 20px;
+	margin:0 20px 0 20px;
+    border: 1px solid #5BC0DE;
+    text-align:center;
+}
+#Center{
+    width:1100px;
+}

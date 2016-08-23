@@ -1,0 +1,26 @@
+﻿@using SmartHouseMVC.Models.clas
+@model IDictionary<int, Technics>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+   
+    @Html.Partial("OllTV")
+    @Html.Partial("OllAudioPlayer")
+    @Html.Partial("OllRefrigerator")
+    @Html.Partial("OllAirConditioner")
+    @Html.Partial("OllCeilingLamp")
+
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+</body>
+</html>
