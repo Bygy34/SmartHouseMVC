@@ -1,30 +1,37 @@
-﻿body {
-}
-
-
-.figure-div{
-    width:200px;
-    float:left;
-    margin-left:15px; 
-   border:1px solid aqua;
+﻿
+body {
+    background-image:url(../Content/Fon.jpg);
 }
 .figure {
     float: left;
-    width: 300px;
-    height: 300px;
- //   border:1px solid aqua
+    width: 250px;
+    margin:20px;
+    padding:20px;
+    background-image:url(../Content/PFon.jpg);
+    border: 2px solid #5BC0DE;
+    border-radius:20px;
+    float: left;
+    padding: 10px; 
 }
-
-
+#Top{
+    text-align:center;
+    width:700px;
+    margin:30px auto;
+    padding:15px;
+    background-image:url(../Content/PFon.jpg);
+    border: 2px solid #5BC0DE;
+    border-radius:20px;
+}
 #Left{
 	margin:0 20px 0 20px;
-	width:160px;
+	width:200px;
 	float:left;
 	background-color: #02eafd;
     background-image:url(../Content/PFon.jpg);
     border-radius: 20px;
     border: 1px solid #5BC0DE;
     text-align:center;
+    padding:20px;
 }
 #Right{
     background-image:url(../Content/PFon.jpg);
@@ -35,6 +42,56 @@
     border: 1px solid #5BC0DE;
     text-align:center;
 }
-#Center{
+
+span{
+    font:italic bold 24px Batang;
+    background-color:#5BC0DE;
+    color:#FFFFFF;
+}
+
+img{
+    position:relative ;
+    top:-90px;
+    right:-70px;
+    text-align:right;
+    margin-bottom:-100px;
+    padding:-20px;
+}
+label{
+    margin:20px;
+    padding:20px;
+}
+h2{
+    text-align:center;
+    color:#5BC0DE;
+}
+.bottonos{
+    background-color:#D5D5D5;
+    color:#5BC0DE;
+}
+input{
+    width:130px;
+}
+.bottonos2{
+    height:7px;
+    text-align:left;
+    background-color:#5BC0DE;
+    color:#FFFFFF;
+    padding:20px;
+    margin:5px;
+}
+.HW1{
+    align-content:center;
+    align-items:center;
     width:1100px;
+    height:75px;
+    background-image:url(../Content/PFon.jpg);
+    color:#5BC0DE;
+    text-align:center;
+    border: 3px solid #5BC0DE;
+    border-radius: 20px;
+    margin: 20px auto;
+}
+a{
+    margin:3px;
 }

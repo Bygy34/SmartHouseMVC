@@ -65,6 +65,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -139,26 +143,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\clas\AirConditioner.cs" />
-    <Compile Include="Models\clas\AudioPlayer.cs" />
-    <Compile Include="Models\clas\CeilingLamp.cs" />
-    <Compile Include="Models\clas\Volume.cs" />
-    <Compile Include="Models\clas\TV.cs" />
-    <Compile Include="Models\clas\Temperature.cs" />
-    <Compile Include="Models\clas\Technics.cs" />
-    <Compile Include="Models\clas\Refrigerator.cs" />
+    <Compile Include="Models\DBClas\AirConditionerdb.cs" />
+    <Compile Include="Models\DBClas\AudioPlayerdb.cs" />
+    <Compile Include="Models\DBClas\CeilingLampdb.cs" />
+    <Compile Include="Models\DBClas\Refrigeratordb.cs" />
+    <Compile Include="Models\DBClas\Techicadb.cs" />
+    <Compile Include="Models\DBClas\TVdb.cs" />
+    <Compile Include="Models\DBClas\TechicaContextInitializer.cs" />
+    <Compile Include="Models\DBClas\TechicaContext.cs" />
     <Compile Include="Models\enums\Chanels.cs" />
     <Compile Include="Models\enums\DirectionWinds.cs" />
     <Compile Include="Models\enums\Music.cs" />
-    <Compile Include="Models\Interfaces\IVolume.cs" />
-    <Compile Include="Models\Interfaces\ITrec.cs" />
-    <Compile Include="Models\Interfaces\ITemprich.cs" />
-    <Compile Include="Models\Interfaces\ITecnica.cs" />
-    <Compile Include="Models\Interfaces\ISpeedWind.cs" />
-    <Compile Include="Models\Interfaces\IDirectionWind.cs" />
-    <Compile Include="Models\Interfaces\IChanel.cs" />
-    <Compile Include="Models\Interfaces\ICeilingLamp.cs" />
-    <Compile Include="Models\Interfaces\IBright.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,26 +174,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Views\My\OllAudioPlayer.cshtml" />
-    <Content Include="Views\My\OllRefrigerator.cshtml" />
-    <Content Include="Views\My\OllAirConditioner.cshtml" />
-    <Content Include="Views\My\OllCeilingLamp.cshtml" />
-    <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
-    <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
-    <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
-    <None Include="_bin_deployableAssemblies\x86\sqlceer40EN.dll" />
-    <None Include="_bin_deployableAssemblies\x86\sqlcecompact40.dll" />
-    <None Include="_bin_deployableAssemblies\x86\sqlceca40.dll" />
-    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\README_ENU.txt" />
-    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\msvcr90.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlceer40EN.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlcecompact40.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\sqlceca40.dll" />
-    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\README_ENU.txt" />
-    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
+    <Content Include="Views\My\AllAudioPlayer.cshtml" />
+    <Content Include="Views\My\AllRefrigerator.cshtml" />
+    <Content Include="Views\My\AllAirConditioner.cshtml" />
+    <Content Include="Views\My\AllCeilingLamp.cshtml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -228,10 +207,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\My\OllTV.cshtml" />
+    <Content Include="Views\My\AllTV.cshtml" />
     <Content Include="Views\My\Index.cshtml" />
-    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
-    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

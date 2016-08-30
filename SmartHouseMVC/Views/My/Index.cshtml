@@ -1,8 +1,8 @@
-﻿@using SmartHouseMVC.Models.clas
-@model IDictionary<int, Technics>
+﻿@using SmartHouseMVC.Models.DBClas
+
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -11,16 +11,35 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 </head>
 <body>
+    <div id="Top"><h1> House For Smart People</h1></div>
+    <div id="Left">
+        <h2>Здесь можно добавлять разные устройства</h2>
+        @using (Html.BeginForm("Add", "My"))
+        {
+            @Html.DropDownList("TecnicaType", (IEnumerable<SelectListItem>)ViewBag.TecnicaList)
+            <input type="submit" value="Добавить">
+        }
+        <br />
+        <h2>Общие настройки</h2>
+            @Html.RouteLink("Включить всё", new { controller = "My", action = "AllOn" }, new { @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("Выключить всё", new { controller = "My", action = "AllOff" }, new { @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("На работу", new { controller = "My", action = "OnWork" }, new { @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("С работы", new { controller = "My", action = "FromWork" }, new { @class = "btn btn-small btn-primary " })<br />
 
-   
-    @Html.Partial("OllTV")
-    @Html.Partial("OllAudioPlayer")
-    @Html.Partial("OllRefrigerator")
-    @Html.Partial("OllAirConditioner")
-    @Html.Partial("OllCeilingLamp")
+    </div>
+    <div id="Center">
+        @Html.Partial("AllAirConditioner")
+        @Html.Partial("AllAudioPlayer")
+        @Html.Partial("AllCeilingLamp")
+        @Html.Partial("AllRefrigerator")
+        @Html.Partial("AllTV")
+    </div>
 
-    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

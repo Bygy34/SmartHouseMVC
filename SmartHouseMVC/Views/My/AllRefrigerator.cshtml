@@ -1,0 +1,34 @@
+﻿@using SmartHouseMVC.Models.DBClas
+
+
+@{  Layout = null;
+}
+<div class="figure-div">
+    @foreach (Refrigeratordb item in ViewBag.Refrigerators)
+    {
+        <div class="figure">
+            <h3>@item.Name</h3><br />
+            @if (item.Status == true)
+            {
+            <p>Устройстро включено</p>
+            @Html.RouteLink("Выключить", new { controller = "My", action = "OnOffRef", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            <p>Статус устройства</p>
+            @item.Status<br />
+            <p>Тумпература</p>
+            @item.Temprich<br />
+            @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseTempricheRef", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasTempricheRef", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+            <p>Яркость лампочки</p>
+            @item.Bright<br />
+            @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseBright", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasBright", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("Удалить", new { controller = "My", action = "DeleteRef", id = item.Id }, new { id = item.Id, @class = "btn btn-default" })<br />
+            }
+            else
+            {
+                <p>Устройстро выключено</p>
+                @Html.RouteLink("Включить", new { controller = "My", action = "OnOffRef", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            }
+        </div>
+    }
+</div>

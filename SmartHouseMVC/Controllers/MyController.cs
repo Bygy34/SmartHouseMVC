@@ -1,203 +1,525 @@
-﻿using SmartHouseMVC.Models.clas;
+﻿using SmartHouseMVC.Models.DBClas;
 using SmartHouseMVC.Models.enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SmartHouseMVC.Models.Interfaces;
-using SmartHouseMVC.Models;
 
 namespace SmartHouseMVC.Controllers
 {
     public class MyController : Controller
     {
-
+        private TechicaContext db = new TechicaContext();
         public ActionResult Index()
         {
-            IDictionary<int, Technics> TecnicaDictionary;
-
-            if (Session["Technics"] == null)
-            {
-                TecnicaDictionary = new SortedDictionary<int, Technics>();
-                TecnicaDictionary.Add(1, new TV("TV", 10, Chanels.M1, false));
-                TecnicaDictionary.Add(2, new AudioPlayer("Магнитофон", 13, Music.trec1, false));
-                TecnicaDictionary.Add(3, new AirConditioner("Кондиционер", 28, 2, DirectionWinds.down, false));
-                TecnicaDictionary.Add(4, new Refrigerator("Холодильник", 7, false, 30));
-                TecnicaDictionary.Add(5, new CeilingLamp("Торшер", 100, false));
-
-                Session["Technics"] = TecnicaDictionary;
-                Session["NextId"] = 6;
-            }
-            else
-            {
-                TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            }
-
             SelectListItem[] TechnicsList = new SelectListItem[5];
-            TechnicsList[0] = new SelectListItem { Text = "Холодильник", Value = "Refrigerator", Selected = true };
+            TechnicsList[0] = new SelectListItem { Text = "Холодильник", Value = "Refrigerator"};
             TechnicsList[1] = new SelectListItem { Text = "Телевизор", Value = "TV" };
-            TechnicsList[2] = new SelectListItem { Text = "Магнитофон", Value = "AudioPlayer" };
+            TechnicsList[2] = new SelectListItem { Text = "Магнитофон", Value = "AudioPlayer", Selected = true };
             TechnicsList[3] = new SelectListItem { Text = "Кондиционер", Value = "AirCondition" };
             TechnicsList[4] = new SelectListItem { Text = "Люстра", Value = "CeilingLamp" };
             ViewBag.TecnicaList = TechnicsList;
-            return View(TecnicaDictionary);
+            ViewBag.AirConditioners = db.AirConditioners.ToList();
+            ViewBag.AudioPlayers = db.AudioPlayers.ToList();
+            ViewBag.Refrigerators = db.Refrigerators.ToList();
+            ViewBag.Ceilings = db.CeilingLamps.ToList();
+            ViewBag.TVs = db.TVs.ToList();
+            return View();
         }
 
         public ActionResult Add(string TecnicaType)
         {
-            Technics newTecnica;
-
             switch (TecnicaType)
             {
                 default:
-                    newTecnica = new Refrigerator("Холодильник", 7, false, 30);
+                    db.Refrigerators.Add(new Refrigeratordb {Id=3, Name="Холодильник",Temprich= 7,Status= false, Bright=30 });
                     break;
                 case "TV":
-                    newTecnica = new TV("Телевизор", 10, Chanels.M1, false);
+                    db.TVs.Add(new TVdb { Id = 3, Name = "Телевизор", Volumes = 10, directionChanel = Chanels.M1, Status = false });
                     break;
                 case "AudioPlayer":
-                    newTecnica = new AudioPlayer("Магнитофон", 13, Music.trec1, false);
+                    db.AudioPlayers.Add(new AudioPlayerdb { Id = 3, Name = "Магнитофон", Volumes = 9, Status = false });
                     break;
                 case "AirCondition":
-                    newTecnica = new AirConditioner("Кондиционер", 28, 2, DirectionWinds.down, false);
+                    db.AirConditioners.Add(new AirConditionerdb { Id = 3, Name = "Кондиционер3", SpeedWind = 2, Status = false, Temprich = 16 });
                     break;
                 case "CeilingLamp":
-                    newTecnica = new CeilingLamp("Люстра", 80, true);
+                    db.CeilingLamps.Add(new CeilingLampdb { Id = 3, Name = "Люстра", BrightLight = 80, Status = true });
                     break;
             }
-            int id = (int)Session["NextId"];
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            TecnicaDictionary.Add(id, newTecnica);
-            id++;
-            Session["NextId"] = id;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
+
+        }
+
+        public ActionResult OnOff(int id)
+        {
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+
+            if (b.Status == false)
+            {
+                b.Status = true;
+            }
+            else 
+            {
+                b.Status = false;
+            }
+            db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult OnOffTV(int id)
+        {
+            TVdb b = db.TVs.Find(id);
+
+            if (b.Status == false)
+            {
+                b.Status = true;
+            }
+            else
+            {
+                b.Status = false;
+            }
+            db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult OnOffAir(int id)
+        {
+            AirConditionerdb b = db.AirConditioners.Find(id);
+
+            if (b.Status == false)
+            {
+                b.Status = true;
+            }
+            else
+            {
+                b.Status = false;
+            }
+            db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult OnOffCeiling(int id)
+        {
+            CeilingLampdb b = db.CeilingLamps.Find(id);
+
+            if (b.Status == false)
+            {
+                b.Status = true;
+            }
+            else
+            {
+                b.Status = false;
+            }
+            db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult OnOffRef(int id)
+        {
+            Refrigeratordb b = db.Refrigerators.Find(id);
+
+            if (b.Status == false)
+            {
+                b.Status = true;
+            }
+            else
+            {
+                b.Status = false;
+            }
+            db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        public ActionResult On(int id)
+        public ActionResult IncreaseVolume(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            TecnicaDictionary[id].status=true;
+            if (id == null) { return HttpNotFound(); }
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AudioPlayerdb)
+            {
+                b.DecreasVolume();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult IncreaseVolumeTV(int? id)
+        {
+            if (id == null) { return HttpNotFound(); }
+            TVdb b = db.TVs.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is TVdb)
+            {
+                b.IncreaseVolume();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DecreasVolumeTV(int? id)
+        {
+            if (id == null) { return HttpNotFound(); }
+            TVdb b = db.TVs.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is TVdb)
+            {
+                b.DecreasVolume();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult Off(int id)
+        public ActionResult DecreasVolume(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            TecnicaDictionary[id].status = false;
+            if (id == null) { return HttpNotFound(); }
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AudioPlayerdb)
+            {
+                b.IncreaseVolume();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult IncreaseVolume(int id)
+        public ActionResult ChanelNext(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IVolume)TecnicaDictionary[id]).IncreaseVolume();
+            if (id == null) { return HttpNotFound(); }
+            TVdb b = db.TVs.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is TVdb)
+            {
+                b.NextChanel();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult DecreasVolume(int id)
+        public ActionResult ChanelPrevious(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IVolume)TecnicaDictionary[id]).DecreasVolume();
+            if (id == null) { return HttpNotFound(); }
+            TVdb b = db.TVs.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is TVdb)
+            {
+                b.PreviousChanel();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult ChanelNext(int id)
+        public ActionResult TrecNext(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IChanel)TecnicaDictionary[id]).NextChanel();
+            if (id == null) { return HttpNotFound(); }
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AudioPlayerdb)
+            {
+                b.NextTrec();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult ChanelPrevious(int id)
+        public ActionResult TrecPrevious(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IChanel)TecnicaDictionary[id]).PreviousChanel();
+            if (id == null) { return HttpNotFound(); }
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AudioPlayerdb)
+            {
+                b.PreviousTrec();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult TrecNext(int id)
+        public ActionResult IncreaseBright(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ITrec)TecnicaDictionary[id]).NextTrec();
+            if (id == null) { return HttpNotFound(); }
+            Refrigeratordb b = db.Refrigerators.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is Refrigeratordb)
+            {
+                b.IncreaseBright();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult TrecPrevious(int id)
+        public ActionResult DecreasBright(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ITrec)TecnicaDictionary[id]).PreviousTrec();
+            if (id == null) { return HttpNotFound(); }
+            Refrigeratordb b = db.Refrigerators.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is Refrigeratordb)
+            {
+                b.DecreasBright();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult IncreaseBright(int id)
+        public ActionResult IncreaseTempriche(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IBright)TecnicaDictionary[id]).IncreaseBright();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.IncreaseTempriche();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult DecreasBright(int id)
+        public ActionResult DecreasTempriche(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IBright)TecnicaDictionary[id]).DecreasBright();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.DecreasTempriche();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult IncreaseTempriche(int id)
+        public ActionResult IncreaseTempricheRef(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ITemprich)TecnicaDictionary[id]).IncreaseTempriche();
+            if (id == null) { return HttpNotFound(); }
+            Refrigeratordb b = db.Refrigerators.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is Refrigeratordb)
+            {
+                b.IncreaseTempriche();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DecreasTempricheRef(int? id)
+        {
+            if (id == null) { return HttpNotFound(); }
+            Refrigeratordb b = db.Refrigerators.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is Refrigeratordb)
+            {
+                b.DecreasTempriche();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult DecreasTempriche(int id)
+
+        public ActionResult NextDirectionWind(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ITemprich)TecnicaDictionary[id]).DecreasTempriche();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.NextDirectionWind();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult NextDirectionWind(int id)
+        public ActionResult PreviousDirectionWind(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IDirectionWind)TecnicaDictionary[id]).NextDirectionWind();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.PreviousDirectionWind();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult PreviousDirectionWind(int id)
+        public ActionResult IncreaseSpeedWind(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((IDirectionWind)TecnicaDictionary[id]).PreviousDirectionWind();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.IncreaseSpeedWind();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult IncreaseSpeedWind(int id)
+        public ActionResult DecreasSpeedWind(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ISpeedWind)TecnicaDictionary[id]).IncreaseSpeedWind();
+            if (id == null) { return HttpNotFound(); }
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is AirConditionerdb)
+            {
+                b.DecreasSpeedWind();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DecreasBrightLight(int? id)
+        {
+            if (id == null) { return HttpNotFound(); }
+            CeilingLampdb b = db.CeilingLamps.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is CeilingLampdb)
+            {
+                b.DecreasBrightLight();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult DecreasSpeedWind(int id)
+        public ActionResult IncreaseBrightLight(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ISpeedWind)TecnicaDictionary[id]).DecreasSpeedWind();
-            return RedirectToAction("Index");
-        }
-        public ActionResult DecreasBrightLight(int id)
-        {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ICeilingLamp)TecnicaDictionary[id]).DecreasBrightLight();
+            if (id == null) { return HttpNotFound(); }
+            CeilingLampdb b = db.CeilingLamps.Find(id);
+            if (b == null) { return HttpNotFound(); }
+            if (b is CeilingLampdb)
+            {
+                b.IncreaseBrightLight();
+                db.Entry(b).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
-        public ActionResult IncreaseBrightLight(int id)
+
+        public ActionResult DeleteCeling(int? id)
         {
-            IDictionary<int, Technics> TecnicaDictionary = (SortedDictionary<int, Technics>)Session["Technics"];
-            ((ICeilingLamp)TecnicaDictionary[id]).IncreaseBrightLight();
+            CeilingLampdb b = db.CeilingLamps.Find(id);
+            if (b != null)
+            {
+                db.CeilingLamps.Remove(b);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
-        
+        public ActionResult DeleteAudio(int? id)
+        {
+            AudioPlayerdb b = db.AudioPlayers.Find(id);
+            if (b != null)
+            {
+                db.AudioPlayers.Remove(b);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteAir(int? id)
+        {
+            AirConditionerdb b = db.AirConditioners.Find(id);
+            if (b != null)
+            {
+                db.AirConditioners.Remove(b);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteRef(int? id)
+        {
+            Refrigeratordb b = db.Refrigerators.Find(id);
+            if (b != null)
+            {
+                db.Refrigerators.Remove(b);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteTV(int? id)
+        {
+            TVdb b = db.TVs.Find(id);
+            if (b != null)
+            {
+                db.TVs.Remove(b);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult AllOn()
+        {
+            foreach(var item in db.Techicas.ToList())
+            {
+                item.Refrigeratordb.Status = true;
+                item.TVdb.Status = true;
+                item.AudioPlayerdb.Status = true;
+                item.AirConditionerdb.Status = true;
+                item.CeilingLampdb.Status = true;
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }         
+            return RedirectToAction("Index");
+        }
+        public ActionResult AllOff()
+        {
+            foreach (var item in db.Techicas.ToList())
+            {
+                item.Refrigeratordb.Status = false;
+                item.TVdb.Status = false;
+                item.AudioPlayerdb.Status = false;
+                item.AirConditionerdb.Status = false;
+                item.CeilingLampdb.Status = false;
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult OnWork()
+        {
+            foreach (var item in db.Techicas.ToList())
+            {
+                item.Refrigeratordb.Status = true;
+                item.TVdb.Status = false;
+                item.AudioPlayerdb.Status = false;
+                item.AirConditionerdb.Status = false;
+                item.CeilingLampdb.Status = false;
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult FromWork()
+        {
+            foreach (var item in db.Techicas.ToList())
+            {
+                item.Refrigeratordb.Status = true;
+                item.TVdb.Status = false;
+                item.AudioPlayerdb.Status = true;
+                item.AudioPlayerdb.Volumes =17;
+                item.AirConditionerdb.Status = true;
+                item.AirConditionerdb.Temprich = 28;
+                item.CeilingLampdb.Status = true;
+                item.CeilingLampdb.BrightLight=90;
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

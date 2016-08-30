@@ -13,6 +13,7 @@ namespace SmartHouseMVC.Models.enums
         M2,
         eumuse,
         newchaenel,
-        inter
+        inter,
+        value
     }
 }

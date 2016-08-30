@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SmartHouseMVC.Models.DBClas;
+using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Data.Entity;
-using SmartHouseMVC.Models.clas;
 
 namespace SmartHouseMVC
 {
@@ -18,7 +14,8 @@ namespace SmartHouseMVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            Database.SetInitializer<TechicaContext>(new TechicaContextInitializer()); 
+
         }
     }
 }

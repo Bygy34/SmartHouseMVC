@@ -1,0 +1,38 @@
+﻿@using SmartHouseMVC.Models.DBClas
+
+
+@{  Layout = null;
+}
+<div class="figure-div">
+@foreach (AirConditionerdb item in ViewBag.AirConditioners)
+{
+    <div class="figure">
+        <h3>@item.Name</h3><br />
+        @if (item.Status == true)
+        {
+        <p>Устройстро включено</p>
+        @Html.RouteLink("Выключить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        <p>Статус устройства</p>
+        @item.Status<br />
+        <p>Тумпература</p>
+        @item.Temprich<br />
+        @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseTempriche", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasTempriche", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        <p>Скорость ветра</p>
+        @item.SpeedWind<br />
+        @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseSpeedWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasSpeedWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        <p>Направление ветра</p>
+        @item.DirectionWind<br />
+        @Html.RouteLink("Увеличить", new { controller = "My", action = "NextDirectionWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        @Html.RouteLink("Уменьшить", new { controller = "My", action = "PreviousDirectionWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        @Html.RouteLink("Удалить", new { controller = "My", action = "DeleteAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        }
+        else
+        {
+            <p>Устройстро выключено</p>
+            @Html.RouteLink("Включить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        }
+    </div>
+}
+</div>

@@ -1,19 +1,17 @@
-﻿using SmartHouseMVC.Models.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SmartHouseMVC.Models.clas
+namespace SmartHouseMVC.Models.DBClas
 {
-    public class CeilingLamp : Technics, ICeilingLamp
+    public class CeilingLampdb
     {
         private int brightnessLight;
-        public CeilingLamp(string name, int brightnessLight, bool status) : base(name, status)
-        {
-            this.brightnessLight = brightnessLight;
-        }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool Status { get; set; }
+        public virtual ICollection<Techicadb> Techicadb { get; set; }
         public int BrightLight
         {
             get
@@ -33,10 +31,10 @@ namespace SmartHouseMVC.Models.clas
         {
             BrightLight += 5;
         }
+
         public void DecreasBrightLight()
         {
             BrightLight -= 5;
         }
-
     }
 }

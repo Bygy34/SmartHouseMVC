@@ -1,0 +1,33 @@
+﻿@using SmartHouseMVC.Models.DBClas
+
+
+@{  Layout = null;
+}
+<div class="figure-div">
+    @foreach (TVdb item in ViewBag.TVs)
+    {
+        <div class="figure">
+            <h3> @item.Name</h3><br />
+            @if (item.Status == true)
+            {
+            <p>Устройстро включено</p>
+            @Html.RouteLink("Выключить", new { controller = "My", action = "OnOffTV", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            <p>Статус устройства</p>
+            @item.Status<br /><p>Громкость</p>
+            @item.Volumes<br />
+            @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseVolumeTV", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasVolumeTV", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+            <p>Канал</p>
+            @item.Chanel<br />
+            @Html.RouteLink("Увеличить", new { controller = "My", action = "ChanelNext", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Уменьшить", new { controller = "My", action = "ChanelPrevious", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("Удалить", new { controller = "My", action = "DeleteTV", id = item.Id }, new { id = item.Id, @class = "btn btn-default" })<br />
+            }
+            else
+            {
+            <p>Устройстро выключено</p>
+            @Html.RouteLink("Включить", new { controller = "My", action = "OnOffTV", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            }
+        </div>
+    }
+</div>
