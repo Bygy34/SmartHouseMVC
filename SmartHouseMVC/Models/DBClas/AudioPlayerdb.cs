@@ -8,7 +8,7 @@ namespace SmartHouseMVC.Models.DBClas
 {
     public class AudioPlayerdb
     {
-        Music directioMusic;
+        private Music directioMusic;
         private int volume;
         public int Id { get; set; }
         public string Name { get; set; }
@@ -30,34 +30,29 @@ namespace SmartHouseMVC.Models.DBClas
 
         }
 
-        public string Trec
+        public Music Trec
         {
             get
             {
-                return directioMusic.ToString();
+                return directioMusic;
             }
             set
             {
+                if (value > 0 && (int)value < 11)
+                {
+                    directioMusic = value;
+                }
             }
         }
 
         public void NextTrec()
         {
-            if (directioMusic == Music.trec10)
-            {
-                directioMusic = Music.trec1;
-            }
-            else { directioMusic++; }
-
+            directioMusic++; 
         }
 
         public void PreviousTrec()
         {
-            if (directioMusic == Music.trec0)
-            {
-                directioMusic = Music.trec9;
-            }
-            else { directioMusic--; }
+            directioMusic--;
         }
 
         public void IncreaseVolume()

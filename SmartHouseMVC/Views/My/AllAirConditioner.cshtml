@@ -6,33 +6,40 @@
 <div class="figure-div">
 @foreach (AirConditionerdb item in ViewBag.AirConditioners)
 {
-    <div class="figure">
+
+    <div class="figure" id="figure_@item.Id">
         <h3>@item.Name</h3><br />
         @if (item.Status == true)
         {
         <p>Устройстро включено</p>
-        @Html.RouteLink("Выключить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+        @Html.RouteLink("Выключить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = "OnA" + item.Id, @class = "btn btn-small btn-primary " })
         <p>Статус устройства</p>
-        @item.Status<br />
+        <div>@item.Status</div><br />
         <p>Тумпература</p>
-        @item.Temprich<br />
-        @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseTempriche", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
-        @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasTempriche", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        <p id="AirT_@item.Id">@item.Temprich</p><br />
+        <button id="BAirTU+@item.Id" class="BAirTU btn btn-small btn-primary">Увеличить</button><button id="BAirTD+@item.Id" class="BAirTD btn btn-small btn-primary">Уменьшить</button>
+             @*@Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseTempriche", id = item.Id }, new { id = "IT" + item.Id, @class = "btn btn-small btn-primary " })
+             @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasTempriche", id = item.Id }, new { id = "DT" + item.Id, @class = "btn btn-small btn-primary " })<br />*@
         <p>Скорость ветра</p>
-        @item.SpeedWind<br />
-        @Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseSpeedWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
-        @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasSpeedWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        <p id="AirSW_@item.Id">@item.SpeedWind</p><br />
+        <button id="BAirSWU+@item.Id" class="BAirSWU btn btn-small btn-primary">Увеличить</button><button id="BAirSWD+@item.Id" class="BAirSWD btn btn-small btn-primary">Уменьшить</button>
+              @*@Html.RouteLink("Увеличить", new { controller = "My", action = "IncreaseSpeedWind", id = item.Id }, new { id = "ISW" + item.Id, @class = "btn btn-small btn-primary " })
+              @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasSpeedWind", id = item.Id }, new { id = "DSW" + item.Id, @class = "btn btn-small btn-primary " })<br />*@
         <p>Направление ветра</p>
-        @item.DirectionWind<br />
-        @Html.RouteLink("Увеличить", new { controller = "My", action = "NextDirectionWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
-        @Html.RouteLink("Уменьшить", new { controller = "My", action = "PreviousDirectionWind", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
-        @Html.RouteLink("Удалить", new { controller = "My", action = "DeleteAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+        <p id="AirDW_@item.Id">@item.DirectionWind</p><br />
+        <button id="BAirDWU+@item.Id" class="BAirDWU btn btn-small btn-primary">Следующее</button><button id="BAirDWD+@item.Id" class="BAirDWD btn btn-small btn-primary">Предыдущее</button>
+               @*@Html.RouteLink("Увеличить", new { controller = "My", action = "NextDirectionWind", id = item.Id }, new { id = "NDW" + item.Id, @class = "btn btn-small btn-primary " })
+               @Html.RouteLink("Уменьшить", new { controller = "My", action = "PreviousDirectionWind", id = item.Id }, new { id = "PDW" + item.Id, @class = "btn btn-small btn-primary " })<br />*@
+        <button id="BAirD+@item.Id" class="BAirD">Удалить</button>
+               @*@Html.RouteLink("Удалить", new { controller = "My", action = "DeleteAir", id = item.Id }, new { id = "D" + item.Id, @class = "btn btn-small btn-primary " })<br />*@
         }
         else
         {
             <p>Устройстро выключено</p>
-            @Html.RouteLink("Включить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Включить", new { controller = "My", action = "OnOffAir", id = item.Id }, new { id = "OF" + item.Id, @class = "btn btn-small btn-primary " })
         }
     </div>
+
+
 }
 </div>

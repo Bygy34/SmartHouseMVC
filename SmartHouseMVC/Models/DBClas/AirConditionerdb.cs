@@ -1,5 +1,7 @@
 ﻿using SmartHouseMVC.Models.enums;
 using System.Collections.Generic;
+using System.Web.Http;
+using System.Web.Routing;
 
 namespace SmartHouseMVC.Models.DBClas
 {
@@ -42,11 +44,19 @@ namespace SmartHouseMVC.Models.DBClas
             }
         }
         
-        public string DirectionWind
+        public DirectionWinds DirectionWind
         {
             get
             {
-                return directionWind.ToString();
+                return directionWind;
+            }
+            set
+            {
+                if (value > 0 && (int)value < 4)
+                {
+                    directionWind = value;
+                }
+                
             }
 
         }
@@ -73,20 +83,14 @@ namespace SmartHouseMVC.Models.DBClas
 
         public void NextDirectionWind()
         {
-            if (directionWind == DirectionWinds.right)
-            {
-                directionWind = DirectionWinds.top;
-            }
-            else { directionWind++; }
+            DirectionWind++;
         }
+        
 
         public void PreviousDirectionWind()
         {
-            if (directionWind == DirectionWinds.right)
-            {
-                directionWind = DirectionWinds.top;
-            }
-            else { directionWind++; }
+                DirectionWind--;
+            
         }
     }
 }

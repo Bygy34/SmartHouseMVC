@@ -18,8 +18,8 @@
             @Html.RouteLink("Уменьшить", new { controller = "My", action = "DecreasVolume", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
             <p>Трек</p>
             @item.Trec<br />
-            @Html.RouteLink("Увеличить", new { controller = "My", action = "TrecNext", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
-            @Html.RouteLink("Уменьшить", new { controller = "My", action = "TrecPrevious", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
+            @Html.RouteLink("Следующий", new { controller = "My", action = "TrecNext", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })
+            @Html.RouteLink("Предыдущий", new { controller = "My", action = "TrecPrevious", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
             @Html.RouteLink("Удалить", new { controller = "My", action = "DeleteAudio", id = item.Id }, new { id = item.Id, @class = "btn btn-small btn-primary " })<br />
             }
             else

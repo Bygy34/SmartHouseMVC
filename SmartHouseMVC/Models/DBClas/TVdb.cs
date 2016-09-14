@@ -14,15 +14,18 @@ namespace SmartHouseMVC.Models.DBClas
         public string Name { get; set; }
         public bool Status { get; set; }
         public virtual ICollection<Techicadb> Techicadb { get; set; }
-        public string Chanel
+        public Chanels Chanel
         {
             get
             {
-                return directionChanel.ToString();
+                return directionChanel;
             }
             set
             {
-
+                if (value>0 && (int)value <6)
+                {
+                    directionChanel = value;
+                }
             }
 
         }
@@ -55,13 +58,12 @@ namespace SmartHouseMVC.Models.DBClas
 
         public void NextChanel()
         {
-            Chanel += 1;
+            directionChanel++;
         }
         
         public void PreviousChanel()
         {
             directionChanel--;
-            Chanel += "";
         }
     }
 }
